@@ -9,14 +9,16 @@ class LocalFeedingTrackingSystem(BaseFeedingTrackingSystem, abc.ABC):
             filepath: str,
             *,
             datetime_format: Optional[str] = '%m/%d/%y %H:%M:%S',
-            width: Optional[int] = 600, 
-            height: Optional[int] = 500, 
+            width: Optional[int] = 600,
+            height: Optional[int] = 500,
             primary_font_size: Optional[int] = 30,
             secondary_font_size: Optional[int] = 20,
-            primary_text_location_x: Optional[int] = 150, 
-            primary_text_location_y: Optional[int] = 100, 
-            secondary_text_location_x: Optional[int] = 150, 
-            secondary_text_location_y: Optional[int] = 300, 
+            primary_text_location_x: Optional[int] = 150,
+            primary_text_location_y: Optional[int] = 100,
+            secondary_text_location_x: Optional[int] = 150,
+            secondary_text_location_y: Optional[int] = 300,
+            warning_text_location_x: Optional[int] = 50,
+            warning_text_location_y: Optional[int] = 100,
         ) -> None:
         super().__init__(
             width=width,
@@ -27,6 +29,8 @@ class LocalFeedingTrackingSystem(BaseFeedingTrackingSystem, abc.ABC):
             primary_text_location_y=primary_text_location_y,
             secondary_text_location_x=secondary_text_location_x,
             secondary_text_location_y=secondary_text_location_y,
+            warning_text_location_x=warning_text_location_x,
+            warning_text_location_y=warning_text_location_y,
         )
         self._filepath = filepath
         self._datetime_format = datetime_format

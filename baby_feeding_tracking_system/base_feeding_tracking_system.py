@@ -14,10 +14,12 @@ class BaseFeedingTrackingSystem(abc.ABC):
             height: int, 
             primary_font_size: int,
             secondary_font_size: int,
-            primary_text_location_x: int, 
-            primary_text_location_y: int, 
-            secondary_text_location_x: int, 
-            secondary_text_location_y: int, 
+            primary_text_location_x: int,
+            primary_text_location_y: int,
+            secondary_text_location_x: int,
+            secondary_text_location_y: int,
+            warning_text_location_x: int,
+            warning_text_location_y: int,
         ) -> None:
         pygame.init()
         pygame.display.set_caption("Feeding Tracking System")
@@ -30,6 +32,8 @@ class BaseFeedingTrackingSystem(abc.ABC):
         self._primary_text_location_y = primary_text_location_y
         self._secondary_text_location_x = secondary_text_location_x
         self._secondary_text_location_y = secondary_text_location_y
+        self._warning_text_location_x = warning_text_location_x
+        self._warning_text_location_y = warning_text_location_y
 
     def _print_text(self, font, x, y, text, color=None):
         if color is None:
@@ -88,7 +92,7 @@ class BaseFeedingTrackingSystem(abc.ABC):
     def erase_most_recent_feeding_time_with_confirmation(self) -> None:
         self.screen.fill(self.black)
         text = "Erasing most recent feeding time"
-        x_line, y_line = self._primary_text_location_x, self._primary_text_location_y
+        x_line, y_line = self._warning_text_location_x, self._warning_text_location_y
         self._print_text_primary(x_line, y_line, text, color=self.red)
 
         text = f"{self.past_feeding_times[-1]}"
