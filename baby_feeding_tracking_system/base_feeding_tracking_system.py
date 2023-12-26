@@ -37,7 +37,7 @@ class BaseFeedingTrackingSystem(abc.ABC):
 
     def _print_text(self, font, x, y, text, color=None):
         if color is None:
-            color = self.white
+            color = self.default_fg_color
         img_text = font.render(text, True, color)
         self.screen.blit(img_text, (x, y))
 
@@ -90,7 +90,7 @@ class BaseFeedingTrackingSystem(abc.ABC):
         pass
 
     def erase_most_recent_feeding_time_with_confirmation(self) -> None:
-        self.screen.fill(self.black)
+        self.screen.fill(self.default_bg_color)
         text = "Erasing most recent feeding time"
         x_line, y_line = self._warning_text_location_x, self._warning_text_location_y
         self._print_text_primary(x_line, y_line, text, color=self.red)
@@ -142,7 +142,7 @@ class BaseFeedingTrackingSystem(abc.ABC):
                 continue
 
             # draw and display
-            self.screen.fill(self.black)
+            self.screen.fill(self.default_bg_color)
             self._draw_primary()
             self._draw_secondary()
             pygame.display.update()
@@ -158,4 +158,16 @@ class BaseFeedingTrackingSystem(abc.ABC):
     @property
     def red(self):
         return 255, 0, 0
-    
+
+    @property
+    def green(self):
+        return 0, 255, 0
+
+    @property
+    def default_fg_color(self):
+        return self.green
+
+    @property
+    def default_bg_color(self):
+        return self.black
+
