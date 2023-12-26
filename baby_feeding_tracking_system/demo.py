@@ -18,7 +18,21 @@ def generate_data():
 def main():
     generate_data()
     filepath = get_filepath()
-    fts = LiamLocalFeedingTrackingSystem(filepath)
+    config = {
+        'data_filepath': filepath,
+        'datetime_format': "%m/%d/%y %H:%M:%S",
+        'width': 1000,
+        'height': 800,
+        'primary_font_size': 60,
+        'secondary_font_size': 30,
+        'primary_text_location_x': 200,
+        'primary_text_location_y': 150,
+        'secondary_text_location_x': 250,
+        'secondary_text_location_y': 500,
+        'warning_text_location_x': 100,
+        'warning_text_location_y': 100,
+    }
+    fts = LiamLocalFeedingTrackingSystem(config)
     fts.run()
 
 if __name__ == "__main__":

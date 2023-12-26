@@ -1,39 +1,13 @@
 import abc
 from datetime import datetime
-from typing import List, Optional
+from typing import List, Dict
 from .base_feeding_tracking_system import BaseFeedingTrackingSystem
 
 class LocalFeedingTrackingSystem(BaseFeedingTrackingSystem, abc.ABC):
-    def __init__(
-            self,
-            filepath: str,
-            *,
-            datetime_format: Optional[str] = '%m/%d/%y %H:%M:%S',
-            width: Optional[int] = 1000,
-            height: Optional[int] = 800,
-            primary_font_size: Optional[int] = 60,
-            secondary_font_size: Optional[int] = 30,
-            primary_text_location_x: Optional[int] = 200,
-            primary_text_location_y: Optional[int] = 150,
-            secondary_text_location_x: Optional[int] = 250,
-            secondary_text_location_y: Optional[int] = 500,
-            warning_text_location_x: Optional[int] = 100,
-            warning_text_location_y: Optional[int] = 100,
-        ) -> None:
-        super().__init__(
-            width=width,
-            height=height,
-            primary_font_size=primary_font_size,
-            secondary_font_size=secondary_font_size,
-            primary_text_location_x=primary_text_location_x,
-            primary_text_location_y=primary_text_location_y,
-            secondary_text_location_x=secondary_text_location_x,
-            secondary_text_location_y=secondary_text_location_y,
-            warning_text_location_x=warning_text_location_x,
-            warning_text_location_y=warning_text_location_y,
-        )
-        self._filepath = filepath
-        self._datetime_format = datetime_format
+    def __init__(self, config: Dict) -> None:
+        super().__init__(config)
+        self._filepath = config['data_filepath']
+        self._datetime_format = config['datetime_format']
 
     def _load_data(self) -> List[datetime]:
         past_feeding_times = []
@@ -65,4 +39,6 @@ class LocalFeedingTrackingSystem(BaseFeedingTrackingSystem, abc.ABC):
 
     def erase_most_recent_feeding_time(self) -> None:
         feeding_times = self._load_data()
+        if len(feeding_times) == 0:
+            return
         self._save_data(feeding_times[:-1])

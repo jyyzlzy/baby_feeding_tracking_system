@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import os
 from .local_feeding_tracking_system import LocalFeedingTrackingSystem
+from .shared import load_config
 
 class LiamLocalFeedingTrackingSystem(LocalFeedingTrackingSystem):
     def calculate_next_feeding_time(self, last_time: datetime) -> datetime:
@@ -10,11 +11,13 @@ class LiamLocalFeedingTrackingSystem(LocalFeedingTrackingSystem):
         return next_time
     
 def main():
-    filepath = os.path.join(os.getcwd(), 'data.txt')
-    if not os.path.exists(filepath):
-        with open(filepath, 'w') as f:
+    config_filepath = os.path.join(os.getcwd(), 'config', 'liam.yaml')
+    config = load_config(config_filepath)
+    data_filepath = config['data_filepath']
+    if not os.path.exists(data_filepath):
+        with open(data_filepath, 'w') as f:
             f.write('07/26/23 17:40:00\n')
-    fts = LiamLocalFeedingTrackingSystem(filepath)
+    fts = LiamLocalFeedingTrackingSystem(config)
     fts.run()
 
 if __name__ == "__main__":
